@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dax6thd61gsov"]
+
+[ext_resource type="Script" uid="uid://c5gkvd335vfet" path="res://src/gameplay/body.gd" id="1_ittur"]
+[ext_resource type="Texture2D" uid="uid://c1q6l5x0ai3dp" path="res://assets/art/sprites/snake-segment.png" id="2_33lun"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bj4t2"]
+size = Vector2(32, 32)
+
+[node name="Body" type="Area2D" unique_id=500752284]
+script = ExtResource("1_ittur")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=63825987]
+position = Vector2(16, 16)
+texture = ExtResource("2_33lun")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1417136255]
+position = Vector2(16, 16)
+shape = SubResource("RectangleShape2D_bj4t2")

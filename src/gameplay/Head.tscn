@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dxr3btgr8fv0o"]
+
+[ext_resource type="Script" uid="uid://cenmwcly20d6j" path="res://src/gameplay/head.gd" id="1_257up"]
+[ext_resource type="Texture2D" uid="uid://cot5sh3dym8kp" path="res://assets/art/sprites/snake-head.png" id="2_f50rg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0h62n"]
+size = Vector2(32, 32)
+
+[node name="Head" type="Area2D" unique_id=1362024536]
+script = ExtResource("1_257up")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=569967171]
+position = Vector2(16, 16)
+texture = ExtResource("2_f50rg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1719872926]
+position = Vector2(16, 16)
+shape = SubResource("RectangleShape2D_0h62n")

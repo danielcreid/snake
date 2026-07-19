@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://be40orkcr3778"]
+
+[ext_resource type="Script" uid="uid://0bglhel5t2ld" path="res://src/gameplay/food.gd" id="1_wiu68"]
+[ext_resource type="Texture2D" uid="uid://dttjt4svr3hdu" path="res://assets/art/sprites/food.png" id="2_3pemf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bj4t2"]
+size = Vector2(32, 32)
+
+[node name="Food" type="Area2D" unique_id=239202322]
+script = ExtResource("1_wiu68")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=656742125]
+position = Vector2(16, 16)
+texture = ExtResource("2_3pemf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1763232183]
+position = Vector2(16, 16)
+shape = SubResource("RectangleShape2D_bj4t2")
