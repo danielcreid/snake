@@ -1,7 +1,14 @@
+# TODO:
+# 1. Ensure food doesn't spawn inside of other objects (snake)
+# 2. Set up score tracking
+# 3. Start and Game Over screens
+# 4. Save high score
+# 5. Pause state
+# 6. ...
+# 7. Do cool ass art + animations (continuous snake where the parts are aware of how the snake is twisted/turned)
+
 class_name Gameplay extends Node2D
 
-#@onready var top_left = %TopLeft
-#@onready var bottom_right = %BottomRight
 @onready var head = $Head
 @onready var spawner = $Spawner
 
