@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c1q6l5x0ai3dp" path="res://assets/art/sprites/snake-segment.png" id="2_33lun"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bj4t2"]
-size = Vector2(32, 32)
+size = Vector2(24, 24)
 
 [node name="Body" type="Area2D" unique_id=500752284]
 script = ExtResource("1_ittur")

@@ -2,8 +2,9 @@
 
 [ext_resource type="Script" uid="uid://ddut60quwokk1" path="res://src/gameplay/gameplay.gd" id="1_tr6da"]
 [ext_resource type="PackedScene" uid="uid://dxr3btgr8fv0o" path="res://src/gameplay/Head.tscn" id="2_g7yt7"]
-[ext_resource type="PackedScene" uid="uid://be40orkcr3778" path="res://src/gameplay/Food.tscn" id="3_epxov"]
+[ext_resource type="Script" uid="uid://dx01ag0q1a6xp" path="res://src/gameplay/boundary.gd" id="4_25bgw"]
 [ext_resource type="Texture2D" uid="uid://dar0pshvmg3to" path="res://assets/art/world/tilesets/Tile_05.png" id="4_epxov"]
+[ext_resource type="Script" uid="uid://ca5fk15vjmvpf" path="res://src/gameplay/spawner.gd" id="5_25bgw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_25bgw"]
 texture = ExtResource("4_epxov")
@@ -13,8 +14,8 @@ texture_region_size = Vector2i(32, 32)
 
 [sub_resource type="TileSet" id="TileSet_0h62n"]
 tile_size = Vector2i(32, 32)
-physics_layer_0/collision_layer = 4
-physics_layer_0/collision_mask = 0
+physics_layer_0/collision_layer = 7
+physics_layer_0/collision_mask = 7
 sources/1 = SubResource("TileSetAtlasSource_25bgw")
 
 [node name="Gameplay" type="Node2D" unique_id=64823625]
@@ -23,14 +24,12 @@ script = ExtResource("1_tr6da")
 [node name="Head" parent="." unique_id=1362024536 instance=ExtResource("2_g7yt7")]
 position = Vector2(160, 416)
 
-[node name="Food" parent="." unique_id=239202322 instance=ExtResource("3_epxov")]
-position = Vector2(352, 192)
-
 [node name="Walls" type="TileMapLayer" parent="." unique_id=1313204546]
 tile_map_data = PackedByteArray("AAAAAAAAAQAAAAAAAAABAAAAAQAAAAAAAAACAAAAAQAAAAAAAAADAAAAAQAAAAAAAAAEAAAAAQAAAAAAAAAFAAAAAQAAAAAAAAAGAAAAAQAAAAAAAAAHAAAAAQAAAAAAAAAIAAAAAQAAAAAAAAAJAAAAAQAAAAAAAAAKAAAAAQAAAAAAAAALAAAAAQAAAAAAAAAMAAAAAQAAAAAAAAANAAAAAQAAAAAAAAAOAAAAAQAAAAAAAAAPAAAAAQAAAAAAAAAQAAAAAQAAAAAAAAARAAAAAQAAAAAAAAASAAAAAQAAAAAAAAATAAAAAQAAAAAAAAAAAAEAAQAAAAAAAAAAAAIAAQAAAAAAAAAAAAMAAQAAAAAAAAAAAAQAAQAAAAAAAAAAAAUAAQAAAAAAAAAAAAYAAQAAAAAAAAAAAAcAAQAAAAAAAAAAAAgAAQAAAAAAAAAAAAkAAQAAAAAAAAAAAAoAAQAAAAAAAAAAAAsAAQAAAAAAAAAAAAwAAQAAAAAAAAAAAA0AAQAAAAAAAAAAAA4AAQAAAAAAAAAAAA8AAQAAAAAAAAAAABAAAQAAAAAAAAAAABEAAQAAAAAAAAAAABIAAQAAAAAAAAAAABMAAQAAAAAAAAABABMAAQAAAAAAAAACABMAAQAAAAAAAAADABMAAQAAAAAAAAAEABMAAQAAAAAAAAAFABMAAQAAAAAAAAAGABMAAQAAAAAAAAAHABMAAQAAAAAAAAAIABMAAQAAAAAAAAAJABMAAQAAAAAAAAAKABMAAQAAAAAAAAALABMAAQAAAAAAAAAMABMAAQAAAAAAAAANABMAAQAAAAAAAAAOABMAAQAAAAAAAAAPABMAAQAAAAAAAAAQABMAAQAAAAAAAAARABMAAQAAAAAAAAASABMAAQAAAAAAAAATABMAAQAAAAAAAAATABIAAQAAAAAAAAATABEAAQAAAAAAAAATABAAAQAAAAAAAAATAA8AAQAAAAAAAAATAA4AAQAAAAAAAAATAAUAAQAAAAAAAAATAAQAAQAAAAAAAAATAAMAAQAAAAAAAAATAAIAAQAAAAAAAAATAAEAAQAAAAAAAAATAA0AAQAAAAAAAAATAAwAAQAAAAAAAAATAAsAAQAAAAAAAAATAAoAAQAAAAAAAAATAAkAAQAAAAAAAAATAAgAAQAAAAAAAAATAAcAAQAAAAAAAAATAAYAAQAAAAAAAAA=")
 tile_set = SubResource("TileSet_0h62n")
 
 [node name="Boundary" type="Node2D" parent="." unique_id=823754705]
+script = ExtResource("4_25bgw")
 
 [node name="TopLeft" type="Marker2D" parent="Boundary" unique_id=803377811]
 unique_name_in_owner = true
@@ -39,3 +38,8 @@ position = Vector2(32, 32)
 [node name="BottomRight" type="Marker2D" parent="Boundary" unique_id=318680920]
 unique_name_in_owner = true
 position = Vector2(608, 608)
+
+[node name="Spawner" type="Node2D" parent="." unique_id=509058024 node_paths=PackedStringArray("boundary")]
+position = Vector2(32, 32)
+script = ExtResource("5_25bgw")
+boundary = NodePath("../Boundary")
