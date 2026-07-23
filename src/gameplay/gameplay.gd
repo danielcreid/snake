@@ -1,5 +1,4 @@
 # TODO:
-# 1. Ensure food doesn't spawn inside of other objects (snake)
 # 2. Set up score tracking
 # 3. Start and Game Over screens
 # 4. Save high score
@@ -9,7 +8,7 @@
 
 class_name Gameplay extends Node2D
 
-@onready var head = $Head
+@onready var head = %Head
 @onready var spawner = $Spawner
 
 @export var speed: float = 5000
@@ -26,8 +25,8 @@ func _ready() -> void:
 	spawner.snake_part_added.connect(_on_snake_part_added)
 	
 	time_since_last_move = time_between_moves
-	spawner.spawn_food()
 	snake_parts.push_back(head)
+	spawner.spawn_food(snake_parts)
 
 func _process(_delta: float) -> void:
 	var new_direction: Vector2 = Vector2.ZERO
@@ -67,7 +66,7 @@ func update_snake() -> void:
 
 func _on_food_eaten() -> void:
 	# Spawn food
-	spawner.call_deferred("spawn_food")
+	spawner.call_deferred("spawn_food", snake_parts)
 
 	# Call spawn_snake_part() and pass the last_position of the snake part at the end of the snake_parts array
 	spawner.call_deferred("spawn_snake_part", snake_parts[snake_parts.size() - 1].last_position)
