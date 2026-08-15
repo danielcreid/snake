@@ -5,7 +5,7 @@ signal snake_part_added(snake_part)
 @export var boundary: Boundary
 
 var food_scene: PackedScene = preload("res://src/gameplay/Food.tscn")
-var body_scene: PackedScene = preload("res://src/gameplay/Body.tscn")
+var snake_part_scene: PackedScene = preload("res://src/gameplay/SnakePart.tscn")
 
 func spawn_food(snake_parts) -> void:
 	# Generate spawn point
@@ -36,7 +36,7 @@ func is_spawn_point_valid(spawn_point, snake_parts) -> bool:
 	return true
 
 func spawn_snake_part(position: Vector2) -> void:
-	var snake_part: Body = body_scene.instantiate() as Body
+	var snake_part: SnakePart = snake_part_scene.instantiate() as SnakePart
 	snake_part.position = position
 	get_parent().add_child(snake_part)
 	snake_part_added.emit(snake_part)

@@ -1,10 +1,10 @@
 [gd_scene format=4 uid="uid://de8f6gnksi7pd"]
 
 [ext_resource type="Script" uid="uid://ddut60quwokk1" path="res://src/gameplay/gameplay.gd" id="1_tr6da"]
-[ext_resource type="PackedScene" uid="uid://dxr3btgr8fv0o" path="res://src/gameplay/Head.tscn" id="2_g7yt7"]
 [ext_resource type="Script" uid="uid://dx01ag0q1a6xp" path="res://src/gameplay/boundary.gd" id="4_25bgw"]
 [ext_resource type="Texture2D" uid="uid://dar0pshvmg3to" path="res://assets/art/world/tilesets/Tile_05.png" id="4_epxov"]
 [ext_resource type="Script" uid="uid://ca5fk15vjmvpf" path="res://src/gameplay/spawner.gd" id="5_25bgw"]
+[ext_resource type="PackedScene" uid="uid://dmjs4icu85vx6" path="res://src/gameplay/SnakePart.tscn" id="6_05p43"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_25bgw"]
 texture = ExtResource("4_epxov")
@@ -41,6 +41,10 @@ position = Vector2(32, 32)
 script = ExtResource("5_25bgw")
 boundary = NodePath("../Boundary")
 
-[node name="Head" parent="." unique_id=1362024536 instance=ExtResource("2_g7yt7")]
+[node name="Head" parent="." unique_id=1583031414 instance=ExtResource("6_05p43")]
+unique_name_in_owner = true
+position = Vector2(160, 384)
+
+[node name="Tail" parent="." unique_id=1288679680 instance=ExtResource("6_05p43")]
 unique_name_in_owner = true
 position = Vector2(160, 416)

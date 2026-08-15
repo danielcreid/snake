@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://dmjs4icu85vx6"]
+
+[ext_resource type="Script" uid="uid://dlwsnucsq6kdd" path="res://src/gameplay/snake_part.gd" id="1_m2oqr"]
+[ext_resource type="Texture2D" uid="uid://d0bg78kvaace5" path="res://assets/art/sprites/snake.png" id="1_vujho"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m2oqr"]
+atlas = ExtResource("1_vujho")
+region = Rect2(0, 0, 32, 32)
+filter_clip = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bj4t2"]
+size = Vector2(24, 24)
+
+[node name="SnakePart" type="Area2D" unique_id=1583031414]
+collision_layer = 7
+collision_mask = 7
+script = ExtResource("1_m2oqr")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1909719668]
+texture = SubResource("AtlasTexture_m2oqr")
+centered = false
+region_rect = Rect2(96, 32, 32, 32)
+region_filter_clip_enabled = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=850611901]
+position = Vector2(16, 16)
+shape = SubResource("RectangleShape2D_bj4t2")
