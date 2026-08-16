@@ -12,6 +12,7 @@ func _ready() -> void:
 	var atlas_texture: AtlasTexture = AtlasTexture.new()
 	atlas_texture.atlas = $Sprite2D.texture.atlas
 	atlas_texture.region = Rect2(0, 0, Global.GRID_SIZE, Global.GRID_SIZE)
+	atlas_texture.filter_clip = true
 	$Sprite2D.texture = atlas_texture
 
 func move_to(new_position) -> void:

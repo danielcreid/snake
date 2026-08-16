@@ -4,7 +4,6 @@
 # 4. Save high score
 # 5. Pause state
 # 6. ...
-# 7. Do cool ass art + animations (continuous snake where the parts are aware of how the snake is twisted/turned)
 
 class_name Gameplay extends Node2D
 
@@ -18,6 +17,7 @@ class_name Gameplay extends Node2D
 
 var move_direction: Vector2 = Vector2.UP
 var current_move_direction: Vector2 = move_direction
+var new_snake_part: SnakePart = null
 var snake_parts: Array = []
 
 var direction_priority: Dictionary = {
@@ -47,7 +47,6 @@ var snake_part_sprite_regions: Dictionary = {
 	"body_right_down": Rect2(0, 0, Global.GRID_SIZE, Global.GRID_SIZE),
 	"body_left_right_0": Rect2(96, 0, Global.GRID_SIZE, Global.GRID_SIZE),
 	"body_left_right_1": Rect2(32, 32, Global.GRID_SIZE, Global.GRID_SIZE),
-	#"body_up_down": Rect2(64, 0, Global.GRID_SIZE, Global.GRID_SIZE),
 	"body_up_down_0": Rect2(64, 0, Global.GRID_SIZE, Global.GRID_SIZE),
 	"body_up_down_1": Rect2(0, 32, Global.GRID_SIZE, Global.GRID_SIZE),
 }
@@ -81,53 +80,61 @@ func _process(_delta: float) -> void:
 	if new_direction + current_move_direction != Vector2.ZERO and new_direction != Vector2.ZERO:
 		move_direction = new_direction
 
-
-
 func _physics_process(delta) -> void:
 	time_since_last_move += speed * delta
 	
 	if time_since_last_move >= time_between_moves:
-		update_snake()
+		if new_snake_part:
+			snake_parts.push_back(new_snake_part)
+			new_snake_part = null
+		move_snake()
+		snake_parts.back().visible = true
 		time_since_last_move = 0
 
-func update_snake() -> void:
+func move_snake() -> void:
 	var new_position: Vector2 = head.position + move_direction * Global.GRID_SIZE
 	head.move_to(new_position)
-	
-	# Swap head sprite based on move direction... very specific and probably can be done differently
-	match move_direction:
-		Vector2.UP:
-			head.get_node("Sprite2D").texture.region = snake_part_sprite_regions["head_up"]
-		Vector2.RIGHT:
-			head.get_node("Sprite2D").texture.region = snake_part_sprite_regions["head_right"]
-		Vector2.DOWN:
-			head.get_node("Sprite2D").texture.region = snake_part_sprite_regions["head_down"]
-		Vector2.LEFT:
-			head.get_node("Sprite2D").texture.region = snake_part_sprite_regions["head_left"]
-	
+
 	# Move each snake part in array to last_position of the part in front of it, including the head
 	for i in range(1, snake_parts.size()):
 		snake_parts[i].move_to(snake_parts[i-1].last_position)
-	
-	for i in range(1, snake_parts.size()):
-		var current_part_pos = snake_parts[i].position
-		var prev_part_pos = snake_parts[i-1].position
-		var next_part_pos
-		var prev_part_direction
-		var next_part_direction
-		var direction_array: Array
-		
-		if i + 1 < snake_parts.size():
-			next_part_pos = snake_parts[i+1].position
-		
-		prev_part_direction = (prev_part_pos - current_part_pos) / Global.GRID_SIZE
-		
-		if next_part_pos:
-			next_part_direction = (next_part_pos - current_part_pos) / Global.GRID_SIZE
-		else:
-			next_part_direction = null
 
-		match prev_part_direction:
+	# Update current_move_direction to track how the snake is actually moving
+	current_move_direction = move_direction
+	
+	# Update snake part sprites
+	update_snake_part_sprites()
+
+func update_snake_part_sprites() -> void:
+	var current_part_pos
+	var prev_part_pos
+	var next_part_pos
+	var prev_part_direction
+	var next_part_direction
+	var direction_array: Array = []
+	
+	for i in snake_parts.size():
+		# Get the current part's position
+		current_part_pos = snake_parts[i].position
+		
+		# If this part is the head, update sprite based on move_direction
+		if i == 0:
+			match move_direction:
+				Vector2.UP:
+					snake_parts[i].get_node("Sprite2D").texture.region = snake_part_sprite_regions["head_up"]
+				Vector2.RIGHT:
+					snake_parts[i].get_node("Sprite2D").texture.region = snake_part_sprite_regions["head_right"]
+				Vector2.DOWN:
+					snake_parts[i].get_node("Sprite2D").texture.region = snake_part_sprite_regions["head_down"]
+				Vector2.LEFT:
+					snake_parts[i].get_node("Sprite2D").texture.region = snake_part_sprite_regions["head_left"]
+			continue
+		
+		# If this part is not the head, grab the previous part's position
+		prev_part_pos = snake_parts[i-1].position
+		
+		# Determine which direction the previous part is in relation to the current part
+		match (prev_part_pos - current_part_pos) / Global.GRID_SIZE:
 			Vector2.UP:
 				prev_part_direction = "up"
 			Vector2.RIGHT:
@@ -137,7 +144,16 @@ func update_snake() -> void:
 			Vector2.LEFT:
 				prev_part_direction = "left"
 		
-		match next_part_direction:
+		# If this part is the tail, update sprite based on where the previous part is
+		if i + 1 >= snake_parts.size():
+			snake_parts[i].get_node("Sprite2D").texture.region = snake_part_sprite_regions["tail_" + prev_part_direction]
+			continue
+
+		# If this part is not the tail, grab the next part's position
+		next_part_pos = snake_parts[i+1].position
+
+		# Determine which direction the next part is in relation to the current part
+		match (next_part_pos - current_part_pos) / Global.GRID_SIZE:
 			Vector2.UP:
 				next_part_direction = "up"
 			Vector2.RIGHT:
@@ -146,24 +162,22 @@ func update_snake() -> void:
 				next_part_direction = "down"
 			Vector2.LEFT:
 				next_part_direction = "left"
-		
+
+		# Store part directions in array
 		direction_array = [
 			prev_part_direction,
 			next_part_direction
 		]
 		
-		if next_part_direction:
-			direction_array.sort_custom(sort_direction)
-			
-			if direction_array.has("left") and direction_array.has("right") or direction_array.has("up") and direction_array.has("down"):
-				snake_parts[i].get_node("Sprite2D").texture.region = snake_part_sprite_regions["body_" + direction_array[0] + "_" + direction_array[1] + "_" + str(randi_range(0,1))]
-			else:
-				snake_parts[i].get_node("Sprite2D").texture.region = snake_part_sprite_regions["body_" + direction_array[0] + "_" + direction_array[1]]
+		# Sort array to follow direction keyword order 
+		direction_array.sort_custom(sort_direction)
+		
+		# Check to see if the piece is either horizontal or vertical, then choose a corresponding random sprite
+		if direction_array.has("left") and direction_array.has("right") or direction_array.has("up") and direction_array.has("down"):
+			snake_parts[i].get_node("Sprite2D").texture.region = snake_part_sprite_regions["body_" + direction_array[0] + "_" + direction_array[1] + "_" + str(randi_range(0,1))]
 		else:
-			snake_parts[i].get_node("Sprite2D").texture.region = snake_part_sprite_regions["tail_" + prev_part_direction]
-
-	# Update current_move_direction to track how the snake is actually moving
-	current_move_direction = move_direction
+			# Render the appropriate corner sprite
+			snake_parts[i].get_node("Sprite2D").texture.region = snake_part_sprite_regions["body_" + direction_array[0] + "_" + direction_array[1]]
 
 func _on_food_eaten() -> void:
 	# Spawn food
@@ -175,11 +189,8 @@ func _on_food_eaten() -> void:
 	# Update score
 
 func _on_snake_part_added(snake_part) -> void:
-	# Add new snake part to the end of the snake_parts array
-	snake_parts.push_back(snake_part)
-	
-	## TODO: This prevents the wrong sprite from showing before update_snake() gets called normally, but adding here moves the snake prematurely, so it looks like it gets a boost of speed.
-	update_snake()
+	# Queue up the part to be added during the next movement update
+	new_snake_part = snake_part
 
 func _on_obstacle_hit(area) -> void:
 	print("Obstacle hit: ", area)

@@ -38,5 +38,6 @@ func is_spawn_point_valid(spawn_point, snake_parts) -> bool:
 func spawn_snake_part(position: Vector2) -> void:
 	var snake_part: SnakePart = snake_part_scene.instantiate() as SnakePart
 	snake_part.position = position
+	snake_part.visible = false # Hide snake part by default; make visible after snake moves
 	get_parent().add_child(snake_part)
 	snake_part_added.emit(snake_part)
