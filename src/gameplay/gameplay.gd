@@ -1,19 +1,22 @@
 # TODO:
-# 2. Set up score tracking
-# 3. Start and Game Over screens
-# 4. Save high score
-# 5. Pause state
-# 6. ...
+# 1. Start and Game Over screens
+# 2. Save high score
+# 3. Pause state
+# 4. ...
+# 5. Update food sprite, random spawn different foods, give different foods different score values
 
 class_name Gameplay extends Node2D
 
 @onready var head = %Head
 @onready var tail = %Tail
 @onready var spawner = $Spawner
+@onready var score_label = %ScoreLabel
 
-@export var speed: float = 5000
+@export var speed: float = 4000
+@export var speed_increase: float = 200
 @export var time_between_moves: float = 1000
 @export var time_since_last_move: float = 0
+@export var food_value: float = 100
 
 var move_direction: Vector2 = Vector2.UP
 var current_move_direction: Vector2 = move_direction
@@ -187,6 +190,11 @@ func _on_food_eaten() -> void:
 	spawner.call_deferred("spawn_snake_part", snake_parts[snake_parts.size() - 1].last_position)
 
 	# Update score
+	Global.score += food_value
+	score_label.text = "Score: " + str(snapped(Global.score, 0))
+
+	# Increase speed
+	speed += speed_increase
 
 func _on_snake_part_added(snake_part) -> void:
 	# Queue up the part to be added during the next movement update
