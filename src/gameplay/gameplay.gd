@@ -1,12 +1,12 @@
 # TODO:
 # 1. Save high score
-# 2. Pause state
-# 4. ...
-# 5. Update food sprite, random spawn different foods, give different foods different score values
+# 2. ...
+# 3. Update food sprite, random spawn different foods, give different foods different score values
 
 class_name Gameplay extends Node2D
 
 const GAME_OVER_SCREEN: PackedScene = preload("res://src/menus/GameOverScreen.tscn")
+const PAUSE_MENU: PackedScene = preload("res://src/menus/PauseMenu.tscn")
 
 @onready var head = %Head
 @onready var tail = %Tail
@@ -25,6 +25,7 @@ var new_snake_part: SnakePart = null
 var snake_parts: Array = []
 
 var game_over_menu: GameOverScreen
+var pause_menu: PauseMenu
 
 var direction_priority: Dictionary = {
 	"left": 1,
@@ -62,6 +63,8 @@ func _ready() -> void:
 	head.obstacle_hit.connect(_on_obstacle_hit)
 	spawner.snake_part_added.connect(_on_snake_part_added)
 	
+	get_window().focus_exited.connect(_on_window_focus_exited)
+	
 	time_since_last_move = time_between_moves
 	snake_parts.push_back(head)
 	snake_parts.push_back(tail)
@@ -82,6 +85,10 @@ func _process(_delta: float) -> void:
 	if Input.is_action_pressed("move_left"):
 		new_direction = Vector2.LEFT
 
+	if Input.is_action_pressed("pause"):
+		pause_menu = PAUSE_MENU.instantiate()
+		add_child(pause_menu)
+		
 	# Make sure the new_direction is valid by checking against current_move_direction
 	if new_direction + current_move_direction != Vector2.ZERO and new_direction != Vector2.ZERO:
 		move_direction = new_direction
@@ -204,7 +211,10 @@ func _on_snake_part_added(snake_part) -> void:
 	new_snake_part = snake_part
 
 func _on_obstacle_hit(area) -> void:
-	print("Obstacle hit: ", area)
 	game_over_menu = GAME_OVER_SCREEN.instantiate()
 	add_child(game_over_menu)
 	# Game Over
+
+func _on_window_focus_exited() -> void:
+	pause_menu = PAUSE_MENU.instantiate()
+	add_child(pause_menu)

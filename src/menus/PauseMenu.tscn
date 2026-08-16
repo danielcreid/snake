@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://cbdfv02ogxg54"]
+
+[ext_resource type="Script" uid="uid://uj6v75vrtrm6" path="res://src/menus/pause_menu.gd" id="1_r53c6"]
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=1033823434]
+process_mode = 3
+script = ExtResource("1_r53c6")
+
+[node name="Container" type="VBoxContainer" parent="." unique_id=654178102]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -88.0
+offset_top = -33.0
+offset_right = 88.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="ResumeButton" type="Button" parent="Container" unique_id=1272594244]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Resume"
+
+[node name="QuitButton" type="Button" parent="Container" unique_id=1732517999]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Quit"
