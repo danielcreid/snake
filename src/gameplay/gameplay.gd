@@ -1,7 +1,8 @@
 # TODO:
-# 1. Save high score
+# 1. Save high score (Do I really want to do this right now or wait until my next game?)
 # 2. ...
 # 3. Update food sprite, random spawn different foods, give different foods different score values
+# 4. Add wall and floor sprites to make this game feel a bit more complete
 
 class_name Gameplay extends Node2D
 
@@ -210,7 +211,7 @@ func _on_snake_part_added(snake_part) -> void:
 	# Queue up the part to be added during the next movement update
 	new_snake_part = snake_part
 
-func _on_obstacle_hit(area) -> void:
+func _on_obstacle_hit(_area) -> void:
 	game_over_menu = GAME_OVER_SCREEN.instantiate()
 	add_child(game_over_menu)
 	# Game Over
