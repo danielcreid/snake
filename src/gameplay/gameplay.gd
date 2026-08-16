@@ -1,11 +1,12 @@
 # TODO:
-# 1. Start and Game Over screens
-# 2. Save high score
-# 3. Pause state
+# 1. Save high score
+# 2. Pause state
 # 4. ...
 # 5. Update food sprite, random spawn different foods, give different foods different score values
 
 class_name Gameplay extends Node2D
+
+const GAME_OVER_SCREEN: PackedScene = preload("res://src/menus/GameOverScreen.tscn")
 
 @onready var head = %Head
 @onready var tail = %Tail
@@ -22,6 +23,8 @@ var move_direction: Vector2 = Vector2.UP
 var current_move_direction: Vector2 = move_direction
 var new_snake_part: SnakePart = null
 var snake_parts: Array = []
+
+var game_over_menu: GameOverScreen
 
 var direction_priority: Dictionary = {
 	"left": 1,
@@ -202,4 +205,6 @@ func _on_snake_part_added(snake_part) -> void:
 
 func _on_obstacle_hit(area) -> void:
 	print("Obstacle hit: ", area)
+	game_over_menu = GAME_OVER_SCREEN.instantiate()
+	add_child(game_over_menu)
 	# Game Over
