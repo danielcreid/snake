@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c1q6l5x0ai3dp"
-path="res://.godot/imported/snake-segment.png-ab4f15d3fc676f5ddd25476dc1c79171.ctex"
+uid="uid://dlogxirno5jtr"
+path="res://.godot/imported/snake-shadow.png-700d31769be89b2e0ec9fa2c3b18f66d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/sprites/snake-segment.png"
-dest_files=["res://.godot/imported/snake-segment.png-ab4f15d3fc676f5ddd25476dc1c79171.ctex"]
+source_file="res://assets/art/sprites/snake-shadow.png"
+dest_files=["res://.godot/imported/snake-shadow.png-700d31769be89b2e0ec9fa2c3b18f66d.ctex"]
 
 [params]
 
@@ -37,4 +37,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1

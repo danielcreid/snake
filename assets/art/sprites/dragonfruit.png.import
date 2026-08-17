@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cay74yp2xn1qn"
-path="res://.godot/imported/walls.png-d6e3cef495f1a24deacc914cb2da0733.ctex"
+uid="uid://866xetfn3xir"
+path="res://.godot/imported/dragonfruit.png-a009a4b9a968d78c37efb2f5c2a03d17.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/world/tilesets/walls.png"
-dest_files=["res://.godot/imported/walls.png-d6e3cef495f1a24deacc914cb2da0733.ctex"]
+source_file="res://assets/art/sprites/dragonfruit.png"
+dest_files=["res://.godot/imported/dragonfruit.png-a009a4b9a968d78c37efb2f5c2a03d17.ctex"]
 
 [params]
 

@@ -2,10 +2,16 @@
 
 [ext_resource type="Script" uid="uid://dlwsnucsq6kdd" path="res://src/gameplay/snake_part.gd" id="1_m2oqr"]
 [ext_resource type="Texture2D" uid="uid://d0bg78kvaace5" path="res://assets/art/sprites/snake.png" id="1_vujho"]
+[ext_resource type="Texture2D" uid="uid://dlogxirno5jtr" path="res://assets/art/sprites/snake-shadow.png" id="2_w6i42"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0h62n"]
+atlas = ExtResource("2_w6i42")
+region = Rect2(0, 0, 32, 32)
+filter_clip = true
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m2oqr"]
 atlas = ExtResource("1_vujho")
-region = Rect2(0, 0, 32, 32)
+region = Rect2(32, 0, 32, 32)
 filter_clip = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bj4t2"]
@@ -16,7 +22,15 @@ collision_layer = 7
 collision_mask = 7
 script = ExtResource("1_m2oqr")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1909719668]
+[node name="ShadowSprite" type="Sprite2D" parent="." unique_id=699448279]
+visible = false
+position = Vector2(2, 2)
+texture = SubResource("AtlasTexture_0h62n")
+centered = false
+
+[node name="SnakeSprite" type="Sprite2D" parent="." unique_id=1909719668]
+unique_name_in_owner = true
+texture_filter = 1
 texture = SubResource("AtlasTexture_m2oqr")
 centered = false
 region_rect = Rect2(96, 32, 32, 32)

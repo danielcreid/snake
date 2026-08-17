@@ -1,6 +1,42 @@
 [gd_scene format=3 uid="uid://be40orkcr3778"]
 
-[ext_resource type="Texture2D" uid="uid://dttjt4svr3hdu" path="res://assets/art/sprites/food.png" id="2_3pemf"]
+[ext_resource type="Texture2D" uid="uid://866xetfn3xir" path="res://assets/art/sprites/dragonfruit.png" id="1_wiu68"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3pemf"]
+atlas = ExtResource("1_wiu68")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_racph"]
+atlas = ExtResource("1_wiu68")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5fndo"]
+atlas = ExtResource("1_wiu68")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6r8np"]
+atlas = ExtResource("1_wiu68")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bj4t2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3pemf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_racph")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5fndo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6r8np")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 3.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bj4t2"]
 size = Vector2(24, 24)
@@ -9,9 +45,11 @@ size = Vector2(24, 24)
 collision_layer = 7
 collision_mask = 7
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=656742125]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1885764859]
 position = Vector2(16, 16)
-texture = ExtResource("2_3pemf")
+sprite_frames = SubResource("SpriteFrames_bj4t2")
+autoplay = "default"
+frame_progress = 0.2948951
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1763232183]
 position = Vector2(16, 16)

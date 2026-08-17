@@ -12,6 +12,7 @@ func _ready() -> void:
 
 func _on_restart_button_pressed() -> void:
 	get_tree().reload_current_scene()
+	Global.score = 0
 
 func _on_quit_button_pressed() -> void:
 	get_tree().quit()
