@@ -70,8 +70,8 @@ func _ready() -> void:
 	snake_parts.push_back(tail)
 	spawner.spawn_food(snake_parts)
 	
-	head.get_node("%SnakeSprite").texture.region = snake_part_sprite_regions["head_up"]
-	tail.get_node("%SnakeSprite").texture.region = snake_part_sprite_regions["tail_up"]
+	head.set_region(snake_part_sprite_regions["head_up"])
+	tail.set_region(snake_part_sprite_regions["tail_up"])
 
 func _process(_delta: float) -> void:
 	var new_direction: Vector2 = Vector2.ZERO
@@ -133,13 +133,13 @@ func update_snake_part_sprites() -> void:
 		if i == 0:
 			match move_direction:
 				Vector2.UP:
-					snake_parts[i].get_node("%SnakeSprite").texture.region = snake_part_sprite_regions["head_up"]
+					snake_parts[i].set_region(snake_part_sprite_regions["head_up"])
 				Vector2.RIGHT:
-					snake_parts[i].get_node("%SnakeSprite").texture.region = snake_part_sprite_regions["head_right"]
+					snake_parts[i].set_region(snake_part_sprite_regions["head_right"])
 				Vector2.DOWN:
-					snake_parts[i].get_node("%SnakeSprite").texture.region = snake_part_sprite_regions["head_down"]
+					snake_parts[i].set_region(snake_part_sprite_regions["head_down"])
 				Vector2.LEFT:
-					snake_parts[i].get_node("%SnakeSprite").texture.region = snake_part_sprite_regions["head_left"]
+					snake_parts[i].set_region(snake_part_sprite_regions["head_left"])
 			continue
 		
 		# If this part is not the head, grab the previous part's position
@@ -158,7 +158,7 @@ func update_snake_part_sprites() -> void:
 		
 		# If this part is the tail, update sprite based on where the previous part is
 		if i + 1 >= snake_parts.size():
-			snake_parts[i].get_node("%SnakeSprite").texture.region = snake_part_sprite_regions["tail_" + prev_part_direction]
+			snake_parts[i].set_region(snake_part_sprite_regions["tail_" + prev_part_direction])
 			continue
 
 		# If this part is not the tail, grab the next part's position
@@ -186,10 +186,10 @@ func update_snake_part_sprites() -> void:
 		
 		# Check to see if the piece is either horizontal or vertical, then choose a corresponding random sprite
 		if direction_array.has("left") and direction_array.has("right") or direction_array.has("up") and direction_array.has("down"):
-			snake_parts[i].get_node("%SnakeSprite").texture.region = snake_part_sprite_regions["body_" + direction_array[0] + "_" + direction_array[1] + "_" + str(randi_range(0,1))]
+			snake_parts[i].set_region(snake_part_sprite_regions["body_" + direction_array[0] + "_" + direction_array[1] + "_" + str(randi_range(0,1))])
 		else:
 			# Render the appropriate corner sprite
-			snake_parts[i].get_node("%SnakeSprite").texture.region = snake_part_sprite_regions["body_" + direction_array[0] + "_" + direction_array[1]]
+			snake_parts[i].set_region(snake_part_sprite_regions["body_" + direction_array[0] + "_" + direction_array[1]])
 
 func _on_food_eaten() -> void:
 	# Spawn food
