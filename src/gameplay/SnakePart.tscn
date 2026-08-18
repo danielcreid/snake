@@ -5,7 +5,7 @@
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m2oqr"]
 atlas = ExtResource("1_vujho")
-region = Rect2(32, 0, 32, 32)
+region = Rect2(0, 0, 32, 32)
 filter_clip = true
 
 [sub_resource type="Shader" id="Shader_smniw"]
